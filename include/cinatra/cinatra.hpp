@@ -7,6 +7,7 @@
 #include <cinatra/response.hpp>
 #include <cinatra/logging.hpp>
 #include <cinatra/aop.hpp>
+#include <cinatra/body_parser.hpp>
 
 #include <boost/lexical_cast.hpp>
 
@@ -157,13 +158,13 @@ namespace cinatra
 		}
 
 	private:
-#ifndef SINGLE_THREAD
+#ifndef CINATRA_SINGLE_THREAD
 		int num_threads_ = std::thread::hardware_concurrency();
-#endif // SINGLE_THREAD
+#endif // CINATRA_SINGLE_THREAD
 
 		std::string listen_addr_;
 		std::string listen_port_;
-		std::string static_dir_ = "./static";
+		std::string static_dir_;
 
 		error_handler_t error_handler_;
 

@@ -1,7 +1,9 @@
 
 
-#define DISABLE_LOGGER
-// 单线程的话禁用一些锁提高效率
+#define CINATRA_DISABLE_LOGGER
+
+// set max request size 10m,default is 2m
+#define CINATRA_REQ_MAX_SIZE 10 * 1024 * 1024
 
 #include <cinatra/cinatra.hpp>
 #include <fstream>
@@ -11,9 +13,9 @@ struct CheckLoginAspect
 	void before(cinatra::Request& req, cinatra::Response& res)
 	{
 		if (!req.session().exists("uid")&&req.path()!="/login.html"&&
-			req.path() != "/test_post"&&req.path().compare(0, 7, "/public"))	//如果session没有uid且访问的不是login和test_post页面
+			req.path() != "/test_post"&&req.path().compare(0, 7, "/public"))	//如果session没有uid且访问的不是login和test_post页面.
  		{
- 			// 跳转到登陆页面
+ 			// 跳转到登陆页面.
  			res.redirect("/login.html");
  		}
 	}
@@ -50,7 +52,7 @@ int main()
 			return;
 		}
 
-		auto body = cinatra::body_parser(req.body());
+		auto body = cinatra::urlencoded_body_parser(req.body());
 		req.session().set("uid", body.get_val("uid"));
 		res.end("Hello " + body.get_val("uid") + "! Your password is " + body.get_val("pwd") + "...hahahahaha...");
 	});
@@ -89,7 +91,7 @@ int main()
 	{
 		res.cookies().new_cookie() // 会话cookie
 			.add("foo", "bar")
-			.new_cookie().max_age(24 * 60 * 60) //这个cookie会保存一天的时间
+			.new_cookie().max_age(24 * 60 * 60) //这个cookie会保存一天的时间.
 			.add("longtime", "test");
 		res.write("<html><head><title>Set cookies</title ></head><body>");
 		res.write("Please visit <a href='/show_cookies'>show cookies page</a>");
@@ -108,7 +110,7 @@ int main()
 		res.end("</body></html>");
 	});
 
-	app.listen("http").run();
+	app.static_dir("./static").listen("http").run();
 
 	return 0;
 }

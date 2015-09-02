@@ -5,14 +5,21 @@ a sinatra inspired modern c++ web framework
 
 #Build on linux
 
-###Debian/Ubuntu:
-##### First: Boost library
+### First: Boost library
+#####Debian/Ubuntu:
+
 ```
 sudo apt-get install libboost-dev
 sudo apt-get install libboost-system-dev libboost-coroutine-dev libboost-thread-dev
 
 ```
-##### Then: Make binary
+
+#### ArchLinux
+```
+sudo pacman -S boost
+```
+
+### Then: Make binary
 ```
 git clone https://github.com/topcpporg/cinatra.git
 cd cinatra
@@ -22,5 +29,7 @@ cmake ..
 make
 ```
 ##### Done!
+##### chinese wiki:https://github.com/topcpporg/cinatra/wiki
+##### english wiki:https://github.com/topcpporg/cinatra/wiki/Introduction
 
-
+QQ group：340713904
